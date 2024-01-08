@@ -1,5 +1,5 @@
 asyncapi: 2.6.0
-id: https://github.com/Advion-Interchim-Scientific/phoenix-docs
+id: https://advion-interchim-scientific.github.io/phoenix-docs/
 tags:
   - name: api
   - name: remote
