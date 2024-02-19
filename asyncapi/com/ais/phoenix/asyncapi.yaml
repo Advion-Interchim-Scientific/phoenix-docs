@@ -6,7 +6,7 @@ info:
   description: >
     > ### Notice
 
-    > #### This document is currently being drafted and is not complete. (Draft: 2)
+    > #### This document is currently being drafted and is not complete. (Draft: 3)
 
 
     ## Overview
@@ -1674,6 +1674,14 @@ components:
       description: Elution step
       type: object
       properties:
+        stepTime:
+          description: > 
+                specifies the duration of an elution step, measured in milliseconds. 
+                To ensure precise control and synchronization within the elution process, 
+                each stepTime must be unique, and the interval between any two consecutive steps should be a minimum of 3 seconds.
+          type: number
+          format: long
+          minimum: 0
         flowRate:
           type: number
           format: float
