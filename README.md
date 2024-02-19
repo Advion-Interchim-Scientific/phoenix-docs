@@ -2,7 +2,10 @@
 
 ## Overview
 
-The puriFlash® API is designed for flexibility and ease of use, enabling seamless integration with puriFlash® systems and peripherals. It supports system control, advanced queue management, real-time monitoring, and anomaly detection, ensuring comprehensive management of purification processes.
+The puriFlash® API is designed for flexibility and ease of use, 
+enabling seamless integration with puriFlash® systems and peripherals. 
+It supports system control, advanced queue management, 
+real-time monitoring, and anomaly detection, ensuring comprehensive management of purification processes.
 
 ## Features
 
