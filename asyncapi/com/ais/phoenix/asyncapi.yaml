@@ -6,7 +6,7 @@ info:
   description: >
     > ### Notice
 
-    > #### This document is currently being drafted and is not complete. (Draft: 3)
+    > #### This document is currently being drafted and is not complete. (Draft: 4)
 
 
     ## Overview
@@ -173,12 +173,78 @@ channels:
     messages:
       ErrorMessage:
         $ref: '#/components/messages/ErrorMessage'
+  Configuration:
+    address: 'puriflash/configuration'
+    description: Channel for receiving system configuration on reload or first connection.
+    messages:
+      ConfigurationMessage:
+        $ref: '#/components/messages/ConfigurationMessage'
+  CollectorStatus:
+    address: 'puriflash/collector/status'
+    description: Channel for receiving collector status.
+    messages:
+      CollectorStatusMessage:
+        $ref: '#/components/messages/CollectorStatusMessage'
+  CollectorCurrentTube:
+    address: 'puriflash/collector/tube'
+    description: Channel for receiving collector current tube.
+    messages:
+      CollectorCurrentTubeMessage:
+        $ref: '#/components/messages/CollectorCurrentTubeMessage'
   CollectionTubesData:
     address: 'puriflash/collection/tubes/data'
     description: Channel for receiving collection tubes data messages from the system.
     messages:
       CollectionTubesDataMessage:
         $ref: '#/components/messages/CollectionTubesDataMessage'
+  ElutionData:
+    address: 'puriflash/elution/global/data'
+    description: Channel for receiving elution data.
+    messages:
+      ElutionDataMessage:
+        $ref: '#/components/messages/ElutionDataMessage'
+  DetectionData:
+    address: 'puriflash/detection/global/data'
+    description: Channel for receiving synchronized detection data during a purification process.
+    messages:
+      DetectionDataMessage:
+        $ref: '#/components/messages/DetectionDataMessage'
+  DetectionUnsyncUVData:
+    address: 'puriflash/detection/unsync/uv/data'
+    description: Channel for receiving unsynchronized UV detection data during an elution purge process.
+    messages:
+      DetectionUnsyncUVDataMessage:
+        $ref: '#/components/messages/DetectionUnsyncUVDataMessage'
+  DetectionUnsyncElsdData:
+    address: 'puriflash/detection/unsync/elsd/data'
+    description: Channel for receiving unsynchronized ELSD detection data during an ELSD purge process.
+    messages:
+      DetectionUnsyncElsdDataMessage:
+        $ref: '#/components/messages/DetectionUnsyncElsdDataMessage'
+  DetectionUnsyncMassData:
+    address: 'puriflash/detection/unsync/uv/data'
+    description: Channel for receiving unsynchronized Mass detection data during a Mass purge process.
+    messages:
+      DetectionUnsyncMassDataMessage:
+        $ref: '#/components/messages/DetectionUnsyncMassDataMessage'
+  ServiceQueueStatus:
+    address: 'puriflash/servicequeue/status'
+    description: Channel for receiving service queue status.
+    messages:
+      ServiceQueueStatusMessage:
+        $ref: '#/components/messages/ServiceQueueStatusMessage'
+  MassSplitStatus:
+    address: 'puriflash/split/mass/status'
+    description: Channel for receiving Mass split status.
+    messages:
+      MassSplitStatusMessage:
+        $ref: '#/components/messages/MassSplitStatusMessage'
+  AutoSamplerStatus:
+    address: 'puriflash/autosampler/status'
+    description: Channel for receiving Auto sampler status.
+    messages:
+      AutoSamplerStatusMessage:
+        $ref: '#/components/messages/AutoSamplerStatusMessage'
 operations:
   RequestMessage:
     action: send
@@ -212,6 +278,30 @@ operations:
       - $ref: '#/components/operationTraits/mqtt'
     messages:
       - $ref: '#/channels/Error/messages/ErrorMessage'
+  ConfigurationMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/Configuration'
+    traits:
+      - $ref: '#/components/operationTraits/mqttRetained'
+    messages:
+      - $ref: '#/channels/Configuration/messages/ConfigurationMessage'
+  CollectorStatusMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/CollectorStatus'
+    traits:
+      - $ref: '#/components/operationTraits/mqttRetained'
+    messages:
+      - $ref: '#/channels/CollectorStatus/messages/CollectorStatusMessage'
+  CollectorCurrentTubeMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/CollectorCurrentTube'
+    traits:
+      - $ref: '#/components/operationTraits/mqttRetained'
+    messages:
+      - $ref: '#/channels/CollectorCurrentTube/messages/CollectorCurrentTubeMessage'
   CollectionTubesDataMessage:
     action: receive
     channel:
@@ -220,6 +310,70 @@ operations:
       - $ref: '#/components/operationTraits/mqtt'
     messages:
       - $ref: '#/channels/CollectionTubesData/messages/CollectionTubesDataMessage'
+  ElutionDataMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/ElutionData'
+    traits:
+      - $ref: '#/components/operationTraits/mqtt'
+    messages:
+      - $ref: '#/channels/ElutionData/messages/ElutionDataMessage'
+  DetectionDataMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/DetectionData'
+    traits:
+      - $ref: '#/components/operationTraits/mqtt'
+    messages:
+      - $ref: '#/channels/DetectionData/messages/DetectionDataMessage'
+  DetectionUnsyncUVDataMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/DetectionUnsyncUVData'
+    traits:
+      - $ref: '#/components/operationTraits/mqtt'
+    messages:
+      - $ref: '#/channels/DetectionUnsyncUVData/messages/DetectionUnsyncUVDataMessage'
+  DetectionUnsyncElsdDataMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/DetectionUnsyncElsdData'
+    traits:
+      - $ref: '#/components/operationTraits/mqtt'
+    messages:
+      - $ref: '#/channels/DetectionUnsyncElsdData/messages/DetectionUnsyncElsdDataMessage'
+  DetectionUnsyncMassDataMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/DetectionUnsyncMassData'
+    traits:
+      - $ref: '#/components/operationTraits/mqtt'
+    messages:
+      - $ref: '#/channels/DetectionUnsyncMassData/messages/DetectionUnsyncMassDataMessage'
+  ServiceQueueStatusMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/ServiceQueueStatus'
+    traits:
+      - $ref: '#/components/operationTraits/mqtt'
+    messages:
+      - $ref: '#/channels/ServiceQueueStatus/messages/ServiceQueueStatusMessage'
+  MassSplitStatusMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/MassSplitStatus'
+    traits:
+      - $ref: '#/components/operationTraits/mqtt'
+    messages:
+      - $ref: '#/channels/MassSplitStatus/messages/MassSplitStatusMessage'
+  AutoSamplerStatusMessage:
+    action: receive
+    channel:
+      $ref: '#/channels/AutoSamplerStatus'
+    traits:
+      - $ref: '#/components/operationTraits/mqtt'
+    messages:
+      - $ref: '#/channels/AutoSamplerStatus/messages/AutoSamplerStatusMessage'
 components:
   messages:
     RequestMessage:
@@ -231,14 +385,159 @@ components:
         required.
       contentType: application/json
       payload:
-        $ref: '#/components/schemas/RequestPayload'
+        $ref: '#/components/schemas/Request'
       examples:
         - name: Connect
           payload:
+            timestamp: 2024-01-31 08:00:00
+            uuid: b1c23e6c-e679-469c-a32a-6753727ff96d
             command: CONNECT
-        - name: Start service queue
+        - name: Set simulated detection data
+          summary: Simulate ELSD, XIC1 and XIC2 detection data
           payload:
-            command: START_SQ
+            command: UPDATE_SIMULATED_DATA_PARAMETERS
+            parameter:
+              - channelType: ELSD
+                steps:
+                  - angle: 90
+                    startingValue: 0
+                    endValue: 500
+                    duration: 120
+                    delay: 0
+                    noise: 0
+                  - angle: 90
+                    startingValue: 500
+                    endValue: 0
+                    duration: 120
+                    delay: 0
+                    noise: 0
+                  - angle: 90
+                    startingValue: 0
+                    endValue: 1000
+                    duration: 120
+                    delay: 0
+                    noise: 0
+                  - angle: 90
+                    startingValue: 1000
+                    endValue: 0
+                    duration: 120
+                    delay: 0
+                    noise: 0
+              - channelType: XIC1
+                steps:
+                  - angle: 90
+                    startingValue: 0
+                    endValue: 1000
+                    duration: 180
+                    delay: 0
+                    noise: 0
+                  - angle: 90
+                    startingValue: 1000
+                    endValue: 0
+                    duration: 300
+                    delay: 0
+                    noise: 0
+              - channelType: XIC2
+                steps:
+                  - angle: 90
+                    startingValue: 0
+                    endValue: 0
+                    duration: 240
+                    delay: 0
+                    noise: 0
+                  - angle: 90
+                    startingValue: 0
+                    endValue: 3000
+                    duration: 120
+                    delay: 0
+                    noise: 0
+                  - angle: 90
+                    startingValue: 3000
+                    endValue: 0
+                    duration: 120
+                    delay: 0
+                    noise: 0
+        - name: Parallel Pump auto-priming and ELSD prime purge
+          summary: Pump auto-priming 100mL/min during 1min for each solvents ways and ELSD prime purge 2 refills
+          payload:
+            command: SET_SQ_ENTRIES
+            parameter:
+              - rank: 1
+                name: Elution auto-priming, ELSD prime
+                parallelProcessesParameters:
+                  - type: ELUTION_PURGE
+                    param:
+                      type: ElutionPurgeParams
+                      detectionParameters:
+                        channels:
+                          - type: UV1
+                            unit: MAU
+                            range:
+                              max: 254
+                              min: 254
+                            threshold: 0
+                        massParams: null
+                        elsdParams: null
+                        baselineCorrectionParameters: null
+                        inflexionPointParameters: null
+                      elutionParameters:
+                        equilibrationSteps: [ ]
+                        methodSteps:
+                          - stepTime: 0
+                            flowRate: 100
+                            percentageA: 100
+                            percentageB: 0
+                            percentageC: 0
+                            percentageD: 0
+                            gradient: false
+                          - stepTime: 60000
+                            flowRate: 100
+                            percentageA: 0
+                            percentageB: 100
+                            percentageC: 0
+                            percentageD: 0
+                            gradient: false
+                          - stepTime: 120000
+                            flowRate: 100
+                            percentageA: 0
+                            percentageB: 0
+                            percentageC: 100
+                            percentageD: 0
+                            gradient: false
+                          - stepTime: 180000
+                            flowRate: 100
+                            percentageA: 0
+                            percentageB: 0
+                            percentageC: 0
+                            percentageD: 100
+                            gradient: false
+                          - stepTime: 240000
+                            flowRate: 100
+                            percentageA: 0
+                            percentageB: 0
+                            percentageC: 0
+                            percentageD: 100
+                            gradient: false
+                      collectionParameters:
+                        collectionCondition: null
+                        firstRackName: "-"
+                        secondRackName: "-"
+                        thirdRackName: "-"
+                        collectionSteps: null
+                        needleRinsingParams:
+                          enabled: false
+                          volume: 0
+                        collectionStartingTubeMode: null
+                      columnHolder: C1
+                    delay: 0
+                    sync: false
+                  - type: ELSD_PRIME_PURGE
+                    param:
+                      type: ElsdPrimePurgeParams
+                      cycles: 2
+                    delay: 0
+                    sync: false
+                cycles: 1
         - name: Pre-Purification process Setup
           payload:
             command: SET_SQ_ENTRIES
@@ -271,21 +570,21 @@ components:
                               percentageB: 0
                               percentageC: 0
                               percentageD: 100
-                              gradient: true
+                              gradient: false
                             - stepTime: 60000
                               flowRate: 100
                               percentageA: 0
                               percentageB: 0
                               percentageC: 100
                               percentageD: 0
-                              gradient: true
+                              gradient: false
                             - stepTime: 180000
                               flowRate: 100
                               percentageA: 0
                               percentageB: 0
                               percentageC: 100
                               percentageD: 0
-                              gradient: true
+                              gradient: false
                         collectionParameters:
                           collectionCondition: null
                           collectionStartingTubeMode: null
@@ -513,6 +812,7 @@ components:
                     sync: false
                 cycles: 1
         - name: Post-Purification process Setup
+          summary: Air purge the IR-20SI-F0004 column. After the bypass, the process executes an elution and ELSD purge.
           payload:
             command: SET_SQ_ENTRIES
             parameter:
@@ -584,8 +884,11 @@ components:
                     delay: 0
                     sync: false
                 cycles: 1
-        - name: System configuration
-          summary: Reload system configuration with specific settings.
+        - name: Start service queue
+          payload:
+            command: START_SQ
+        - name: Reload system configuration
+          summary: Update system configuration with a full simulated PF5250.
           payload:
             command: RELOAD_SYSTEM_CONFIGURATION
             parameter:
@@ -679,7 +982,7 @@ components:
         execution status of commands and any results or data.
       contentType: application/json
       payload:
-        $ref: '#/components/schemas/ResponsePayload'
+        $ref: '#/components/schemas/Response'
       examples:
         - name: Error
           summary: Usupported request error example.
@@ -703,7 +1006,7 @@ components:
       summary: Status updates from the system.
       contentType: application/json
       payload:
-        $ref: '#/components/schemas/StatusPayload'
+        $ref: '#/components/schemas/Status'
       examples:
         - name: Initializing
           summary: System initializing UV Detector
@@ -718,7 +1021,7 @@ components:
         description for troubleshooting.
       contentType: application/json
       payload:
-        $ref: '#/components/schemas/ErrorPayload'
+        $ref: '#/components/schemas/Error'
       examples:
         - name: Communication failed
           summary: Pump module not responding
@@ -726,14 +1029,149 @@ components:
             type:
               code: PMP002
               description: Serial port communication error
+    ConfigurationMessage:
+      name: System configuration
+      title: System configuration
+      summary: Configuration message showing all system and peripheral parameters.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/SystemConfiguration'
+      examples:
+        - name: System configuration
+          summary: Full simulated PF5250.
+          payload:
+            model: "PF_5_250"
+            option: NONE
+            connectionConfig:
+              autoPortDetection: true
+              autoConnection: true
+              heartbeatCheck: false
+              undetectableVirtualPorts: [ ]
+              ignoredVirtualPorts: [ ]
+            pumpConfig:
+              model: "PF_5250"
+              maxFlowRate: 250
+              maxPressure: 250
+              portName: null
+              valves: [ "LOOP", "C1_C2" ]
+            collectorConfig:
+              capacity: 3
+              uvLeakSensor: true
+              needleVolume: 0.0
+              homeOffsetX: -6.0
+              homeOffsetY: -27.5
+              collectorLeakSensor: true
+              deadVolume: 2.936
+              portName: null
+              ignored: false
+            uvDetectorConfig:
+              type: "UV800"
+              portName: null
+              ignored: false
+            extraModules: [ "ELSD", "MASS", "AUTO_SAMPLER" ]
+            simulatedModules: [ "PUMP", "COLLECTOR", "UV", "ELSD", "ELSD_SPLIT", "MASS", "MASS_SPLIT", "AUTO_SAMPLER" ]
+            virtualModules: [ ]
+            injectionPumpConfig: null
+            secondCollectorConfig: null
+            elsdConfig:
+              detectorConfig:
+                internal: true
+                nebulizationDurationMillis: 2100
+                portName: null
+              splitConfig:
+                makeupPumpFlowRate: 0.15
+                valveRotationPeriodMillis: 1500
+                deadVolume: 0.002
+                portName: null
+              ignored: false
+            massConfig:
+              detectorConfig:
+                model: "MS2000"
+                nebulizationDurationMillis: 1000
+                capillaryTemperatureDeltaPercentage: 0.1
+                capVoltageDeltaPercentage: 0.1
+                sourceGasTemperatureDelta: 10.0
+                esiVoltageDelta: 150.0
+                apciCoronaDischargeDelta: 1.0
+              splitConfig:
+                makeupPumpFlowRate: 0.1
+                valveRotationPeriodMillis: 1500
+                deadVolume: 0.019
+                portName: null
+                dilutionPumpFlowRate: 0.5
+              ignored: false
+            autoSamplerConfig:
+              rackConfigurationName: "ITM-18 4 x 11"
+              finePositioningMode: false
+              capacity: 1
+              needleDeadVolume: 0.24
+              deadVolume: 2.99
+              rinsingFlowRate: 35.0
+              pickupFlowRate: 10.0
+              rinsingPumpSpeed: 100
+              homeOffsetX: 0.0
+              homeOffsetY: 0.0
+              syringeVolume: 25.0
+              purgeRatio: 3
+              portName: null
+              maxDefaultBottleVolume: 250.0
+              maxDefaultWasteVolume: 5000.0
+              currentBottleVolume: 250.0
+              currentWasteVolume: 0.0
+              ignored: false
+            rfidConfig: null
+            levelSensorConfig: null
+            ledConfig: null
+    CollectorStatusMessage:
+      name: Collector status
+      title: Collector status
+      summary: Collector status updates from the system.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/CollectorStatus'
+      examples:
+        - name: Collector home status
+          payload:
+            status: STOP
+            position:
+              x: 9999
+              y: 9999
+              z: 0
+            valveStatus: WASTE
+            leakAlarm: NONE
+            uvLeakAlarm: NONE
+    CollectorCurrentTubeMessage:
+      name: Collector current tube
+      title: Collector current tube
+      summary: Current tube updates indicating number, index and volume.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/Tube'
+      examples:
+        - name: Current rinsing tube
+          payload:
+            tubesData:
+              - tube:
+                  tubeIndex:
+                    rackIndex: 0
+                    xIndex: 0
+                    yIndex: 0
+                  tubeNumber:
+                    rackIndex: 0
+                    number: 1
+                  currentVolume: 3
+                  maxVolume: 25
+                  full: false
+                  rinsingTube: true
+                  startTime: -1
+                  endTime: -1
     CollectionTubesDataMessage:
       name: Collection tubes data
       title: Collection tubes data
-      summary: >-
-        Collection data message indicating tube, rack and peak number, collected volume and detectors data.
+      summary: Collection data message indicating tube, rack and peak number, collected volume and detectors data.
       contentType: application/json
       payload:
-        $ref: '#/components/schemas/TubesDataPayload'
+        $ref: '#/components/schemas/TubesData'
       examples:
         - name: Collection tubes data
           summary: Example data representing the collection tubes with their respective detector mappings.
@@ -772,6 +1210,227 @@ components:
                     dataCount: 77
                 massDetectorMap: { }
                 peakNumber: 1
+    ElutionDataMessage:
+      name: Elution data
+      title: Elution data
+      summary: Elution data message indicating time, percentages, flow rate and pressure.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ElutionData'
+      examples:
+        - name: Elution data
+          payload:
+            time: 225505
+            data:
+              - id: null
+                channel:
+                  type: A
+                  unit: PERCENTAGE
+                value: 100
+              - id: null
+                channel:
+                  type: B
+                  unit: PERCENTAGE
+                value: 0
+              - id: null
+                channel:
+                  type: C
+                  unit: PERCENTAGE
+                value: 0
+              - id: null
+                channel:
+                  type: D
+                  unit: PERCENTAGE
+                value: 0
+              - id: null
+                channel:
+                  type: FLOW_RATE
+                  unit: FLOW_RATE
+                value: 100
+              - id: null
+                channel:
+                  type: PRESSURE
+                  unit: BAR
+                value: 2
+    DetectionDataMessage:
+      name: Detection data
+      title: Detection data
+      summary: Detection data message indicating time, flow rate, detection channels, value and threshold.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/DetectionData'
+      examples:
+        - name: Detection data (UV1, ELSD, XIC1 and XIC2)
+          payload:
+            time: 586002
+            flowRate: 15
+            data:
+              - channel:
+                  type: UV1
+                  unit: MAU
+                  range:
+                    max: 200
+                    min: 200
+                  threshold: 10
+                value: 647.75
+              - channel:
+                  type: ELSD
+                  unit: MV
+                  range:
+                    max: 35
+                    min: 35
+                  threshold: 10
+                value: 397.3
+              - channel:
+                  type: XIC1
+                  unit: MC_S
+                  range:
+                    max: 199
+                    min: 192
+                  threshold: 10
+                value: 700.464
+              - channel:
+                  type: XIC2
+                  unit: MC_S
+                  range:
+                    max: 254
+                    min: 245
+                  threshold: 10
+                value: 0
+    DetectionUnsyncUVDataMessage:
+      name: Detection unsynchronized UV data
+      title: Detection unsynchronized UV data
+      summary: Detection data message indicating time, flow rate, uv channels, value and threshold.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/DetectionData'
+      examples:
+        - name: UV1 detection data
+          payload:
+            time: 240004
+            flowRate: 100
+            data:
+              - channel:
+                  type: UV1
+                  unit: MAU
+                  range:
+                    max: 254
+                    min: 254
+                  threshold: 0
+                value: 845
+    DetectionUnsyncElsdDataMessage:
+      name: Detection unsynchronized ELSD data
+      title: Detection unsynchronized ELSD data
+      summary: Detection data message indicating time, flow rate, ELSD channel, value and threshold.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/DetectionData'
+      examples:
+        - name: ELSD detection data
+          payload:
+            time: 240004
+            flowRate: 100
+            data:
+              - channel:
+                  type: ELSD
+                  unit: MV
+                  range:
+                    max: 35
+                    min: 35
+                  threshold: 0
+                value: 200
+    DetectionUnsyncMassDataMessage:
+      name: Detection unsynchronized Mass data
+      title: Detection unsynchronized Mass data
+      summary: Detection data message indicating time, flow rate, Mass channels, value and threshold.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/DetectionData'
+      examples:
+        - name: XIC1 detection data
+          payload:
+            time: 240004
+            flowRate: 100
+            data:
+              - channel:
+                  type: XIC1
+                  unit: MC_S
+                  range:
+                    max: 199
+                    min: 192
+                  threshold: 0
+                value: 700
+    ServiceQueueStatusMessage:
+      name: Service queue status
+      title: Service queue status
+      summary: Service queue status indicating global state and detailed current process status
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/ServiceQueueStatus'
+      examples:
+        - name: Service queue status
+          summary: Running SQ with 2 parallel processes
+          payload:
+            state: RUNNING
+            currentBlockStatus:
+              rank: 1
+              name: "Elution auto-priming, ELSD prime"
+              status:
+                state: RUNNING
+                time: 238001
+                progress: 0.944448
+                description: ""
+              parallelProcessStatus:
+                ELUTION_PURGE:
+                  state: RUNNING
+                  time: 237998
+                  progress: 0.9875
+                  description: ""
+                ELSD_PRIME_PURGE:
+                  state: DONE
+                  time: 68924
+                  progress: 1
+                  description: ""
+    MassSplitStatusMessage:
+      name: Mass split status
+      title: Mass split status
+      summary: Mass split status message indicating valve and pumps states, volumes, pressures, flow rates and alarms.
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/MassSplitStatus'
+      examples:
+        - name: Running Mass split
+          payload:
+            valveState: RUNNING
+            valveRotationPeriod: 1.5
+            makeUpPumpState: RUNNING
+            dilutionPumpState: RUNNING
+            makeUpPumpFlowRate: 0.1
+            makeUpPumpVolumeLeft: 0
+            dilutionPumpFlowRate: 0.5
+            dilutionPumpVolumeLeft: 0
+            dilutionPumpCurrentPressure: 60
+            makeUpPumpCurrentPressure: 60
+            makeUpSolventAlarm: false
+            dilutionSolventAlarm: false
+            makeUpPumpPressureAlarm: false
+            dilutionPumpPressureAlarm: false
+    AutoSamplerStatusMessage:
+      name: Auto sampler status
+      title: Auto sampler status
+      summary: Auto sampler status indicating state, total steps, step, total time, time and description
+      contentType: application/json
+      payload:
+        $ref: '#/components/schemas/AutoSamplerStatus'
+      examples:
+        - name: Auto sampler loading status
+          payload:
+            state: LOADING
+            totalSteps: 51
+            step: 50
+            totalTime: 117000
+            time: 2514
+            description: MOVE_ARM
   schemas:
     SystemConfiguration:
       type: object
@@ -1286,23 +1945,25 @@ components:
           type: boolean
           default: true
           description: Indicates whether the server will automatically initialize all system modules at startup.
-    RequestPayload:
+    Request:
       type: object
       description: >
-        Defines the structure for sending commands to the system. Each request must specify a command and may include additional parameters relevant to the command.
+        Defines the structure for sending commands to the system. Each request must specify a command. Some commands may require additional parameters to execute properly.
       required:
         - command
       properties:
         timestamp:
           type: string
           format: date-time
-          description: >-
-            Request timestamp. Use UTC format for synchronization across
-            different time zones.
+          description: Request timestamp. Use UTC format for synchronization across different time zones.
         uuid:
           type: string
           format: uuid
-          description: Request unique identifier.
+          description: >
+            Request unique identifier, adhering to the universally unique identifier (UUID) format.
+            The format is a series of hexadecimal digits, split into five groups, separated by hyphens, 
+            in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens). 
+            **Example:** `b1c23e6c-e679-469c-a32a-6753727ff96d`.
         command:
           type: string
           enum:
@@ -1315,14 +1976,121 @@ components:
             - RESUME_SQ
             - STOP_SQ
             - RELOAD_SYSTEM_CONFIGURATION
-          description: Command to execute.
+            - INITIALIZE_AUTO_SAMPLER
+            - CLOSE_COLLECTOR_VALVE
+            - MOVE_COLLECTOR_TO_HOME_POSITION
+            - SWITCH_MASS_TO_STANDBY_MODE
+            - UPDATE_SIMULATED_DATA_PARAMETERS
+            - REFRESH_RACK_SET
+            - STOP_PUMP
+            - STOP_ELSD_SPLIT
+          description: |-
+            - **CONNECT**: Initiates a connection with the system. No additional parameters required.
+            - **INIT_MODULES**: Initialize all modules according to system configuration. No additional parameters required.
+            - **DISCONNECT**: Terminates the connection with the system. No additional parameters required.
+            - **SET_SQ_ENTRIES**: Configures service queue entries. Requires a 'parameter' detailing the sequence.
+            - **START_SQ**: Starts the service queue execution. No additional parameters required.
+            - **PAUSE_SQ**: Pauses the service queue. No additional parameters required.
+            - **RESUME_SQ**: Resumes the service queue. No additional parameters required.
+            - **STOP_SQ**: Stops the service queue. No additional parameters required.
+            - **RELOAD_SYSTEM_CONFIGURATION**: Updates the system with new configuration settings. Requires a 'parameter' with configuration details.
+            - **SWITCH_MASS_TO_STANDBY_MODE**: Puts the Mass into standby mode. No additional parameters required.
+            
+            Data Simulation: 
+            - **UPDATE_SIMULATED_DATA_PARAMETERS**: Updates parameters for simulated data. Requires a 'parameter' with simulation details.
+            
+            Shortcuts: 
+            - **INITIALIZE_AUTO_SAMPLER**: Initialize the auto sampler after a failure. No additional parameters required.
+            - **CLOSE_COLLECTOR_VALVE**: Closes the collector valve. No additional parameters required.
+            - **MOVE_COLLECTOR_TO_HOME_POSITION**: Moves the collector to its home position. No additional parameters required.
+            - **REFRESH_RACK_SET**: Refreshes the rack set. No additional parameters required.
+            - **STOP_PUMP**: Stops the pump. No additional parameters required.
+            - **STOP_ELSD_SPLIT**: Stops the ELSD split. No additional parameters required.
         parameter:
-          description: >-
-            Additional parameter required for certain commands. Follow the
-            specific schema for each command.
+          description: Additional parameter required for the 'SET_SQ_ENTRIES', 'RELOAD_SYSTEM_CONFIGURATION', and 'UPDATE_SIMULATED_DATA_PARAMETERS' commands. Follow the specific schema for each command.
           type: array
+          oneOf:
+            - $ref: '#/components/schemas/SQEntriesParameters'
+            - $ref: '#/components/schemas/SystemConfiguration'
+            - $ref: '#/components/schemas/SimulatedDataParameters'
+    SimulatedDataParameters:
+      description: >-
+        An array consisting of configurations for each detector channel used in the method. 
+        Each element in the array contains the parameters for simulating a detector response.
+      type: array
+      items:
+        $ref: '#/components/schemas/SimulatedChannelParameter'
+    SimulatedChannelParameter:
+      type: object
+      description: >-
+        Defines the simulation parameters for a specific type of detector channel, 
+        including the channel type and the steps for simulation.
+      properties:
+        channelType:
+          type: string
+          description: Specifies the detector channel type
+          enum:
+            - UV1
+            - UV2
+            - UV3
+            - UV4
+            - UV_SCAN
+            - XIC1
+            - XIC2
+            - XIC3
+            - DELTA_TIC
+            - ELSD
+        steps:
+          type: array
+          description: A sequence of simulation steps
           items:
-            $ref: '#/components/schemas/SQEntriesParameters'
+            $ref: '#/components/schemas/SimulationStep'
+      required:
+        - channelType
+        - steps
+    SimulationStep:
+      type: object
+      description: Represents a segment of the simulation
+      properties:
+        angle:
+          type: number
+          format: float
+          description: Step angle
+          default: 90
+        startingValue:
+          type: number
+          format: float
+          description: Step start value
+          minimum: 0
+        endValue:
+          type: number
+          format: float
+          description: Step end value
+          minimum: 0
+        duration:
+          type: number
+          format: float
+          minimum: 0
+          description: Time of the transition from the starting value to the end value in seconds.
+        delay:
+          type: number
+          format: float
+          minimum: 0
+          description: A waiting period in seconds before initiating the step.
+          default: 0
+        noise:
+          type: number
+          format: float
+          minimum: 0
+          default: 0
+          description: An optional parameter to introduce noise into the simulation.
+      required:
+        - angle
+        - startingValue
+        - endValue
+        - duration
+        - delay
+        - noise
     SQEntriesParameters:
       description: List of sequential service queue blocks
       required:
@@ -1365,14 +2133,28 @@ components:
           type: string
           enum:
             - ELUTION_PURGE
+            - ELSD_PRIME_PURGE
             - ELSD_PURGE
             - PRE_PURIFICATION
             - PURIFICATION
             - POST_PURIFICATION
         param:
+          type: object
           description: Process parameter according to selected type
+          properties:
+            type:
+              description: The name of the params that matches the selected process
+              type: string
+              enum:
+                - ElutionPurgeParams
+                - ElsdPrimePurgeParams
+                - ElsdPurgeParams
+                - PrePurificationParams
+                - Method
+                - PostPurificationParams
           anyOf:
             - $ref: '#/components/schemas/ElutionPurgeParameters'
+            - $ref: '#/components/schemas/ElsdPrimePurgeParameters'
             - $ref: '#/components/schemas/ElsdPurgeParameters'
             - $ref: '#/components/schemas/PrePurificationParameters'
             - $ref: '#/components/schemas/Method'
@@ -1671,18 +2453,21 @@ components:
             - HIGH_TEMP_MEDIUM_FRAG
             - HIGH_TEMP_HIGH_FRAG
     ElutionStep:
-      description: Elution step
+      description: >
+        Represents a step in the elution process with specific conditions for solvent percentages, flow rate, and whether the step is part of a gradient or an isocratic elution. 
+        **Note:** The sum of the percentages of solvents A, B, C, and D must equal 100% to ensure a valid solvent composition for each step.
       type: object
       properties:
         stepTime:
-          description: > 
-                specifies the duration of an elution step, measured in milliseconds. 
-                To ensure precise control and synchronization within the elution process, 
-                each stepTime must be unique, and the interval between any two consecutive steps should be a minimum of 3 seconds.
+          description: >
+            specifies the duration of an elution step, measured in milliseconds. 
+            To ensure precise control and synchronization within the elution process, 
+            each stepTime must be unique, and the interval between any two consecutive steps should be a minimum of 3 seconds.
           type: number
           format: long
           minimum: 0
         flowRate:
+          description: The flow rate for this elution step, measured in milliliters per minute (mL/min).
           type: number
           format: float
           minimum: 0
@@ -1707,6 +2492,9 @@ components:
           minimum: 0
           maximum: 100
         isGradient:
+          description: >
+            Specifies if this step is part of a gradient (true) or an isocratic elution (false). 
+            In a gradient, the solvent composition changes over time, while in an isocratic elution, it remains constant.
           type: boolean
           default: true
     CollectionStep:
@@ -1808,10 +2596,18 @@ components:
           description: Duration of the purge in seconds.
           type: integer
           minimum: 0
+    ElsdPrimePurgeParameters:
+      description: ELSD prime purge parameters
+      type: object
+      properties:
+        cycles:
+          description: Number of Refill cycles.
+          type: integer
+          exclusiveMinimum: 0
     MassPurgeParameters:
       description: Mass purge parameters
       type: object
-    ResponsePayload:
+    Response:
       description: Response message to a specific request.
       type: object
       properties:
@@ -1837,7 +2633,7 @@ components:
           type: string
           format: uuid
           description: Request unique identifier.
-    StatusPayload:
+    Status:
       description: Current system status.
       type: object
       properties:
@@ -1867,7 +2663,7 @@ components:
         description:
           type: string
           description: System status description.
-    ErrorPayload:
+    Error:
       description: System detailed error.
       type: object
       properties:
@@ -1889,7 +2685,34 @@ components:
         description:
           type: string
           description: Error description
-    TubesDataPayload:
+    CollectorStatus:
+      type: object
+      description: Collector status
+      properties:
+        status:
+          type: string
+          enum:
+            - INIT
+            - MOVING
+            - STOP
+        position:
+          $ref: '#/components/schemas/Position'
+        valveStatus:
+          type: string
+          enum:
+            - WASTE
+            - COLLECT
+        leakAlarm:
+          type: string
+          enum:
+            - NONE
+            - LEAK
+        uvLeakAlarm:
+          type: string
+          enum:
+            - NONE
+            - LEAK
+    TubesData:
       description: Collection tubes data
       type: array
       items:
@@ -1977,6 +2800,242 @@ components:
           type: number
         dataCount:
           type: integer
+    ElutionData:
+      description: Elution data
+      type: object
+      properties:
+        time:
+          type: integer
+          description: data time in milliseconds.
+          minimum: 0
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ElutionChannelValue'
+    ElutionChannelValue:
+      description: Elution channel value
+      type: object
+      properties:
+        id:
+          type: integer
+          default: null
+        channel:
+          $ref: '#/components/schemas/ElutionChannel'
+        value:
+          type: number
+          format: float
+          minimum: 0
+    ElutionChannel:
+      description: Elution channel
+      type: object
+      properties:
+        type:
+          description: Channel type
+          type: string
+          enum:
+            - A
+            - B
+            - C
+            - D
+            - FLOW_RATE
+            - PRESSURE
+        unit:
+          description: Channel unit
+          type: string
+          enum:
+            - PERCENTAGE
+            - FLOW_RATE
+            - BAR
+    DetectionData:
+      description: Detection data
+      type: object
+      properties:
+        time:
+          type: integer
+          description: data time in milliseconds.
+          minimum: 0
+        flowRate:
+          type: number
+          format: float
+          description: Pump flow in ml/min at time of data acquisition.
+          minimum: 0
+        data:
+          type: array
+          items:
+            $ref: '#/components/schemas/DetectionChannelValue'
+    DetectionChannelValue:
+      description: Detection channel value
+      type: object
+      properties:
+        channel:
+          $ref: '#/components/schemas/DetectionChannel'
+        value:
+          type: number
+          format: float
+          minimum: 0
+    ServiceState:
+      type: string
+      enum:
+        - IDLE
+        - RUNNING
+        - PAUSED
+        - CANCELLED
+        - FAILED
+        - DONE
+      description: Represents the service execution state.
+    ProcessType:
+      type: string
+      enum:
+        - PURIFICATION
+        - ELUTION_PURGE
+        - ELSD_PURGE
+        - ELSD_PRIME_PURGE
+        - PRE_PURIFICATION
+        - POST_PURIFICATION
+      description: Specifies the process type.
+    ServiceStatus:
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/ServiceState'
+        time:
+          type: integer
+          description: Process spent time in milliseconds.
+          minimum: 0
+        progress:
+          description: Indicates the process progress as a fractional representation where 1 corresponds to 100% completion and -1 to indeterminate progress.
+          type: number
+          format: float
+          minimum: -1
+          maximum: 1
+        description:
+          description: Process progress description.
+          type: string
+      description: Defines the process execution state, time spent (ms), progress, and a descriptive note if any.
+    ParallelProcessStatus:
+      type: object
+      additionalProperties:
+        $ref: '#/components/schemas/ServiceStatus'
+      description: Progress status of all parallel processes.
+    ServiceBlockStatus:
+      type: object
+      properties:
+        rank:
+          description: Service block rank.
+          type: integer
+        name:
+          description: Service block name.
+          type: string
+        status:
+          $ref: '#/components/schemas/ServiceStatus'
+        parallelProcessStatus:
+          $ref: '#/components/schemas/ParallelProcessStatus'
+      description: Service queue entry 'block' status.
+    ServiceQueueStatus:
+      type: object
+      properties:
+        state:
+          $ref: '#/components/schemas/ServiceState'
+        currentBlockStatus:
+          $ref: '#/components/schemas/ServiceBlockStatus'
+      description: Global service queue status and current block status.
+    MassSplitStatus:
+      type: object
+      properties:
+        valveState:
+          description: Valve state
+          type: string
+          enum:
+            - RUNNING
+            - STOP
+        valveRotationPeriod:
+          description: Valve rotation period in seconds
+          type: number
+          format: float
+          exclusiveMinimum: 0
+        makeUpPumpState:
+          description: Makeup pump state
+          type: string
+          enum:
+            - RUNNING
+            - STOP
+            - REFILL
+            - EMPTY
+            - ALARM
+        dilutionPumpState:
+          description: Dilution pump state
+          type: string
+          enum:
+            - RUNNING
+            - STOP
+            - ALARM
+        makeUpPumpFlowRate:
+          description: Makeup pump flow rate in mL/min
+          type: number
+          format: float
+          minimum: 0
+        makeUpPumpVolumeLeft:
+          description: Makeup pump left volume in mL
+          type: number
+          format: float
+          minimum: 0
+        dilutionPumpFlowRate:
+          description: Dilution pump flow rate in mL/min
+          type: number
+          format: float
+          minimum: 0
+        dilutionPumpVolumeLeft:
+          description: Dilution pump left volume in mL
+          type: number
+          format: float
+          minimum: 0
+        dilutionPumpCurrentPressure:
+          description: Dilution pump pressure in bar
+          type: integer
+          minimum: 0
+        makeUpPumpCurrentPressure:
+          description: Makeup pump pressure in bar
+          type: integer
+          minimum: 0
+        makeUpSolventAlarm:
+          description: Makeup pump solvent alarm
+          type: boolean
+        dilutionSolventAlarm:
+          description: Dilution pump solvent alarm
+          type: boolean
+        makeUpPumpPressureAlarm:
+          description: Makeup pump pressure alarm
+          type: boolean
+        dilutionPumpPressureAlarm:
+          description: Dilution pump pressure alarm
+          type: boolean
+    AutoSamplerStatus:
+      description: Auto sampler detailed status
+      type: object
+      properties:
+        state:
+          description: Auto sampler state
+          type: string
+          enum:
+            - LOADING
+            - PURGING
+            - INITIALIZING
+            - IDLE
+        totalSteps:
+          description: Total steps
+          type: integer
+        step:
+          description: Current step
+          type: integer
+        totalTime:
+          description: Total time
+          type: integer
+        time:
+          description: Current time
+          type: integer
+        description:
+          description: Current step description
+          type: string
     ClientId:
       type: string
       description: MQTT client unique identifier used during connection
@@ -1986,6 +3045,15 @@ components:
         min:
           type: number
         max:
+          type: number
+    Position:
+      type: object
+      properties:
+        x:
+          type: number
+        y:
+          type: number
+        z:
           type: number
   securitySchemes:
     unsecured:
